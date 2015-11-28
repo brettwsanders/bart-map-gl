@@ -94,13 +94,14 @@ var RouteOverlayExample = React.createClass({
   },
 
   _redrawSVGOverlay: function _redrawSVGOverlay(opt) {
-    var routes = ROUTES.map(function _map(route, index) {
-      var points = route.map(opt.project).map(function __map(p) {
+    // console.log(this.props.routeSelected);
+    // console.log(ROUTES);
+    // var routes = ROUTES.map(function _map(route, index) {
+      var index = 0;
+      var points = this.props.routeSelected.map(opt.project).map(function __map(p) {
         return [d3.round(p.x, 1), d3.round(p.y, 1)];
       });
       return r.g({key: index}, this._renderRoute(points, index));
-    }, this);
-    return r.g(routes);
   },
 
   _redrawCanvasOverlay: function _redrawCanvasOverlay(opt) {
@@ -120,7 +121,7 @@ var RouteOverlayExample = React.createClass({
   },
 
   render: function render() {
-    if (this.props.routesToggle) {
+    if (this.props.routeSelected) {
       return r(MapGL, assign({
         latitude: this.state.latitude,
         longitude: this.state.longitude,

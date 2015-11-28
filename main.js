@@ -23,8 +23,21 @@ var document = require('global/document');
 var React = require('react');
 var r = require('r-dom');
 var window = require('global/window');
-
+var bartData = require('./data/bart-routes.json');
 var BartStations = require('./views/bart-stations.react');
+
+var stations = {};
+var routes = {};
+
+bartData.stations.forEach(function _getCoords(station) {
+  stations[station.abbr] = [station.latitude, station.longitude, station.name];
+});
+
+bartData.routes.forEach(function _buildRoutes(route) {
+  routes[route.abbr] = route.stations.map(function _getCoords(station) {
+    return stations[station];
+  });
+});
 
 function getAccessToken() {
   var match = window.location.search.match(/access_token=([^&\/]*)/);
@@ -43,15 +56,14 @@ var App = React.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      routesToggle: false
+      routeSelected: false
     };
   },
 
-  handleClick: function(e) {
+  handleChange: function(e) {
     this.setState({
-      routesToggle: !this.state.routesToggle
+      routeSelected: routes[e.target.value]
     });
-    setTimeout(function() {console.log(this.state.routesToggle)}.bind(this), 1000);
   },
 
   render: function render() {
@@ -60,13 +72,24 @@ var App = React.createClass({
       height: 500,
       style: {float: 'left'},
       mapStyle: 'mapbox://styles/mapbox/dark-v8',
-      routesToggle: this.state.routesToggle,
+      routeSelected: this.state.routeSelected,
       mapboxApiAccessToken: getAccessToken()
     };
-    return r.div([
-      r.h1("Bart Map"),
-      r.input({type: 'button', value: 'Toggle Routes', onClick: this.handleClick}),
-      r(BartStations, common)
+    return r.div([ 
+      r.div({style: {float: 'left'}}, [
+        r.h1('Bart Map'),
+        r.select({name: 'route-dropdown', defaultValue: '', onChange: this.handleChange}, [
+          r.option({value: '', label: 'Select a route...', disabled: true}),
+          r.option({value: 'M-R', label: 'Millbrae-Richmond'}),
+          r.option({value: 'M-PBP', label: 'Millbrae-Pittsburg/Bay Point'}),
+          r.option({value: 'DC-DP', label: 'Daly City - Dublin/Pleasanton'}),
+          r.option({value: 'DC-F', label: 'Daly City - Fremont'}),
+          r.option({value: 'R-F', label: 'Richmond - Fremont'})
+        ])
+      ]),
+      r.div({style: {clear: 'both'}}, [
+        r(BartStations, common)
+      ])
     ]);
   }
 });
