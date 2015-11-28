@@ -77,7 +77,7 @@ var App = React.createClass({
     return r.div({className: 'container'}, [ 
       r.div({className: 'header'}, [
         r.h1('Bart Route Visualizer'),
-        r.h3('An application using react-map-gl'),
+        r.h3([r.span('An application using '), r.a({href:'https://github.com/uber/react-map-gl'}, [r.span('react-map-gl')])]),
         r.select({name: 'route-dropdown', defaultValue: '', onChange: this.handleChange}, [
           r.option({value: '', label: 'Select a route...', disabled: true}),
           r.option({value: 'M-R', label: 'Millbrae-Richmond'}),
