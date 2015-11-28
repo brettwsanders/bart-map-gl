@@ -50,7 +50,7 @@ var RouteOverlayExample = React.createClass({
     return {
       latitude: 37.774963,
       longitude: -122.224274,
-      zoom: 8.70,
+      zoom: 9.1,
       startDragLatLng: null,
       isDragging: false
     };

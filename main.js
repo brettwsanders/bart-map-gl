@@ -76,8 +76,8 @@ var App = React.createClass({
     };
     return r.div({className: 'container'}, [ 
       r.div({className: 'header'}, [
-        r.h1('Bart Route Visualizer'),
-        r.h3([r.span('An application using '), r.a({href:'https://github.com/uber/react-map-gl'}, [r.span('react-map-gl')])]),
+        r.h1('BART Route Visualizer'),
+        r.h3([r.span('An application using '), r.a({href:'https://github.com/uber/react-map-gl', target: '_blank'}, [r.span('react-map-gl')])]),
         r.select({name: 'route-dropdown', defaultValue: '', onChange: this.handleChange}, [
           r.option({value: '', label: 'Select a route...', disabled: true}),
           r.option({value: 'M-R', label: 'Millbrae-Richmond'}),
@@ -87,8 +87,10 @@ var App = React.createClass({
           r.option({value: 'R-F', label: 'Richmond - Fremont'})
         ])
       ]),
-      r.div({className: 'map'}, [
-        r(BartStations, common)
+      r.div({className: 'map-container'}, [
+        r.div({className: 'inner-map-container'}, [
+          r(BartStations, common)
+        ])
       ])
     ]);
   }
