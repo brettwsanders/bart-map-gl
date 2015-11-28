@@ -24,7 +24,7 @@ var React = require('react');
 var r = require('r-dom');
 var window = require('global/window');
 
-var BartRouteExample = require('./views/bart-stations.react');
+var BartStations = require('./views/bart-stations.react');
 
 function getAccessToken() {
   var match = window.location.search.match(/access_token=([^&\/]*)/);
@@ -41,16 +41,32 @@ var App = React.createClass({
 
   displayName: 'App',
 
+  getInitialState: function getInitialState() {
+    return {
+      routesToggle: false
+    };
+  },
+
+  handleClick: function(e) {
+    this.setState({
+      routesToggle: !this.state.routesToggle
+    });
+    setTimeout(function() {console.log(this.state.routesToggle)}.bind(this), 1000);
+  },
+
   render: function render() {
     var common = {
       width: 500,
       height: 500,
       style: {float: 'left'},
+      mapStyle: 'mapbox://styles/mapbox/dark-v8',
+      routesToggle: this.state.routesToggle,
       mapboxApiAccessToken: getAccessToken()
     };
     return r.div([
       r.h1("Bart Map"),
-      r(BartRouteExample, common)
+      r.input({type: 'button', value: 'Toggle Routes', onClick: this.handleClick}),
+      r(BartStations, common)
     ]);
   }
 });

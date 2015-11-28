@@ -85,7 +85,7 @@ var RouteOverlayExample = React.createClass({
           d: 'M' + points.join('L'),
           style: {
             fill: 'none',
-            stroke: alphaify(color(index), 0.7),
+            stroke: alphaify('#1FBAD6', 0.4),
             strokeWidth: 6
           }
         })
@@ -111,29 +111,43 @@ var RouteOverlayExample = React.createClass({
     ROUTES.map(function _map(route, index) {
       route.map(opt.project).forEach(function _forEach(p, i) {
         var point = [d3.round(p.x, 1), d3.round(p.y, 1)];
-        ctx.fillStyle = d3.rgb(color(index)).brighter(1).toString();
+        ctx.fillStyle = alphaify('#1FBAD6', 1);
         ctx.beginPath();
-        ctx.arc(point[0], point[1], 2, 0, Math.PI * 2);
+        ctx.arc(point[0], point[1], 3, 0, Math.PI * 2);
         ctx.fill();
       });
     });
   },
 
   render: function render() {
-    return r(MapGL, assign({
-      latitude: this.state.latitude,
-      longitude: this.state.longitude,
-      zoom: this.state.zoom,
-      width: this.props.width,
-      height: this.props.height,
-      mapStyle: 'mapbox://styles/mapbox/dark-v8',
-      startDragLatLng: this.state.startDragLatLng,
-      isDragging: this.state.isDragging,
-      onChangeViewport: this.props.onChangeViewport || this._onChangeViewport
-    }, this.props), [
-      r(SVGOverlay, {redraw: this._redrawSVGOverlay}),
-      r(CanvasOverlay, {redraw: this._redrawCanvasOverlay})
-    ]);
+    if (this.props.routesToggle) {
+      return r(MapGL, assign({
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        zoom: this.state.zoom,
+        width: this.props.width,
+        height: this.props.height,
+        startDragLatLng: this.state.startDragLatLng,
+        isDragging: this.state.isDragging,
+        onChangeViewport: this.props.onChangeViewport || this._onChangeViewport
+      }, this.props), [
+        r(SVGOverlay, {redraw: this._redrawSVGOverlay}),
+        r(CanvasOverlay, {redraw: this._redrawCanvasOverlay})
+      ]);
+    } else {
+      return r(MapGL, assign({
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        zoom: this.state.zoom,
+        width: this.props.width,
+        height: this.props.height,
+        startDragLatLng: this.state.startDragLatLng,
+        isDragging: this.state.isDragging,
+        onChangeViewport: this.props.onChangeViewport || this._onChangeViewport
+      }, this.props), [
+        r(CanvasOverlay, {redraw: this._redrawCanvasOverlay})
+      ]);
+    }
   }
 });
 
