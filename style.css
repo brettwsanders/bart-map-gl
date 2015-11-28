@@ -1,0 +1,16 @@
+h1 {
+  font-family:verdana;
+  font-weight: 100;
+}
+
+h3 {
+  font-family: verdana;
+  font-weight: 100;
+}
+
+div .header {
+  text-align: center;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding-bottom: 20px;
+}

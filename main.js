@@ -68,16 +68,16 @@ var App = React.createClass({
 
   render: function render() {
     var common = {
-      width: 500,
+      width: 1000,
       height: 500,
-      style: {float: 'left'},
       mapStyle: 'mapbox://styles/mapbox/dark-v8',
       routeSelected: this.state.routeSelected,
       mapboxApiAccessToken: getAccessToken()
     };
-    return r.div([ 
-      r.div({style: {float: 'left'}}, [
-        r.h1('Bart Map'),
+    return r.div({className: 'container'}, [ 
+      r.div({className: 'header'}, [
+        r.h1('Bart Route Visualizer'),
+        r.h3('An application using react-map-gl'),
         r.select({name: 'route-dropdown', defaultValue: '', onChange: this.handleChange}, [
           r.option({value: '', label: 'Select a route...', disabled: true}),
           r.option({value: 'M-R', label: 'Millbrae-Richmond'}),
@@ -87,7 +87,7 @@ var App = React.createClass({
           r.option({value: 'R-F', label: 'Richmond - Fremont'})
         ])
       ]),
-      r.div({style: {clear: 'both'}}, [
+      r.div({className: 'map'}, [
         r(BartStations, common)
       ])
     ]);

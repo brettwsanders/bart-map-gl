@@ -94,10 +94,7 @@ var RouteOverlayExample = React.createClass({
   },
 
   _redrawSVGOverlay: function _redrawSVGOverlay(opt) {
-    // console.log(this.props.routeSelected);
-    // console.log(ROUTES);
-    // var routes = ROUTES.map(function _map(route, index) {
-      var index = 0;
+    var index = 0;
       var points = this.props.routeSelected.map(opt.project).map(function __map(p) {
         return [d3.round(p.x, 1), d3.round(p.y, 1)];
       });
@@ -121,34 +118,20 @@ var RouteOverlayExample = React.createClass({
   },
 
   render: function render() {
+    var overlays = [r(CanvasOverlay, {redraw: this._redrawCanvasOverlay})];
     if (this.props.routeSelected) {
-      return r(MapGL, assign({
-        latitude: this.state.latitude,
-        longitude: this.state.longitude,
-        zoom: this.state.zoom,
-        width: this.props.width,
-        height: this.props.height,
-        startDragLatLng: this.state.startDragLatLng,
-        isDragging: this.state.isDragging,
-        onChangeViewport: this.props.onChangeViewport || this._onChangeViewport
-      }, this.props), [
-        r(SVGOverlay, {redraw: this._redrawSVGOverlay}),
-        r(CanvasOverlay, {redraw: this._redrawCanvasOverlay})
-      ]);
-    } else {
-      return r(MapGL, assign({
-        latitude: this.state.latitude,
-        longitude: this.state.longitude,
-        zoom: this.state.zoom,
-        width: this.props.width,
-        height: this.props.height,
-        startDragLatLng: this.state.startDragLatLng,
-        isDragging: this.state.isDragging,
-        onChangeViewport: this.props.onChangeViewport || this._onChangeViewport
-      }, this.props), [
-        r(CanvasOverlay, {redraw: this._redrawCanvasOverlay})
-      ]);
+      overlays.push(r(SVGOverlay, {redraw: this._redrawSVGOverlay}));
     }
+    return r(MapGL, assign({
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
+      zoom: this.state.zoom,
+      width: this.props.width,
+      height: this.props.height,
+      startDragLatLng: this.state.startDragLatLng,
+      isDragging: this.state.isDragging,
+      onChangeViewport: this.props.onChangeViewport || this._onChangeViewport
+    }, this.props), overlays);
   }
 });
 
