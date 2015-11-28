@@ -66,20 +66,17 @@ var RouteOverlayExample = React.createClass({
     });
   },
 
-  _renderRoute: function _renderRoute(points, index) {
+  _renderRoute: function _renderRoute(points) {
     return r.g({style: {pointerEvents: 'click', cursor: 'pointer'}}, [
       r.g({
         style: {pointerEvents: 'visibleStroke'},
-        onClick: function onClick() {
-          windowAlert('route ' + index);
-        }
       }, [
         r.path({
           d: 'M' + points.join('L'),
           style: {
             fill: 'none',
-            stroke: alphaify('#1FBAD6', 0.4),
-            strokeWidth: 6
+            stroke: alphaify('#1FBAD6', 0.6),
+            strokeWidth: 7
           }
         })
       ])
@@ -91,7 +88,7 @@ var RouteOverlayExample = React.createClass({
       var points = this.props.routeSelected.map(opt.project).map(function __map(p) {
         return [d3.round(p.x, 1), d3.round(p.y, 1)];
       });
-      return r.g({key: index}, this._renderRoute(points, index));
+      return r.g({key: index}, this._renderRoute(points));
   },
 
   _redrawCanvasOverlay: function _redrawCanvasOverlay(opt) {

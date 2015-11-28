@@ -22,7 +22,7 @@
     "uber-standard": "^5.1.0"
   },
   "scripts": {
-    "start": "budo ./main.js --live --title bart-map --css style.css -t | bistre",
+    "start": "budo ./main.js --live --title 'BART Route Visualizer' --css style.css -t | bistre",
     "lint": "uber-standard",
     "precommit": "npm run lint -s",
     "prepush": "npm run lint -s"
