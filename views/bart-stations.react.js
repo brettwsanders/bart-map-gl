@@ -52,7 +52,9 @@ var RouteOverlayExample = React.createClass({
       longitude: -122.224274,
       zoom: 9.1,
       startDragLatLng: null,
-      isDragging: false
+      isDragging: false,
+      strokeWidth: 7,
+      strokeOpacity: 0.6
     };
   },
 
@@ -75,12 +77,26 @@ var RouteOverlayExample = React.createClass({
           d: 'M' + points.join('L'),
           style: {
             fill: 'none',
-            stroke: alphaify('#1FBAD6', 0.6),
-            strokeWidth: 7
+            stroke: alphaify('#1FBAD6', this.state.strokeOpacity),
+            strokeWidth: this.state.strokeWidth
           }
         })
       ])
     ]);
+  },
+
+  _mouseOver: function _mouseOver(e) {
+    this.setState({
+      strokeWidth: 8,
+      strokeOpacity: 0.7
+    });
+  },
+
+  _mouseOut: function _mouseOut(e) {
+    this.setState({
+      strokeWidth: 7,
+      strokeOpacity: 0.6
+    });
   },
 
   _redrawSVGOverlay: function _redrawSVGOverlay(opt) {
@@ -88,7 +104,7 @@ var RouteOverlayExample = React.createClass({
       var points = this.props.routeSelected.map(opt.project).map(function __map(p) {
         return [d3.round(p.x, 1), d3.round(p.y, 1)];
       });
-      return r.g({key: index}, this._renderRoute(points));
+      return r.g({key: index, onMouseOver: this._mouseOver, onMouseOut: this._mouseOut}, this._renderRoute(points));
   },
 
   _redrawCanvasOverlay: function _redrawCanvasOverlay(opt) {
