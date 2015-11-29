@@ -34,7 +34,7 @@ bartData.stations.forEach(function _getCoords(station) {
 });
 
 bartData.routes.forEach(function _buildRoutes(route) {
-  routes[route.abbr] = route.stations.map(function _getCoords(station) {
+  routes[route.routeNumber] = route.stations.map(function _getCoords(station) {
     return stations[station];
   });
 });
@@ -56,13 +56,15 @@ var App = React.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      routeSelected: false
+      routeSelected: false,
+      routeNumber: undefined
     };
   },
 
   handleChange: function(e) {
     this.setState({
-      routeSelected: routes[e.target.value]
+      routeSelected: routes[e.target.value],
+      routeNumber: e.target.value
     });
   },
 
@@ -72,6 +74,7 @@ var App = React.createClass({
       height: 500,
       mapStyle: 'mapbox://styles/mapbox/dark-v8',
       routeSelected: this.state.routeSelected,
+      routeNumber: this.state.routeNumber,
       mapboxApiAccessToken: getAccessToken()
     };
     return r.div({className: 'container'}, [ 
@@ -79,12 +82,12 @@ var App = React.createClass({
         r.h1('BART Route Visualizer'),
         r.h3([r.span('An application using '), r.a({href:'https://github.com/uber/react-map-gl', target: '_blank'}, [r.span('react-map-gl')])]),
         r.select({name: 'route-dropdown', defaultValue: '', onChange: this.handleChange}, [
-          r.option({value: '', label: 'Select a route...', disabled: true}),
-          r.option({value: 'M-R', label: 'Millbrae-Richmond'}),
-          r.option({value: 'M-PBP', label: 'Millbrae-Pittsburg/Bay Point'}),
-          r.option({value: 'DC-DP', label: 'Daly City - Dublin/Pleasanton'}),
-          r.option({value: 'DC-F', label: 'Daly City - Fremont'}),
-          r.option({value: 'R-F', label: 'Richmond - Fremont'})
+          r.option({value: undefined, label: 'Select a route...', disabled: true}),
+          r.option({value: '8', label: 'Millbrae-Richmond'}),
+          r.option({value: '2', label: 'Millbrae-Pittsburg/Bay Point'}),
+          r.option({value: '12', label: 'Daly City - Dublin/Pleasanton'}),
+          r.option({value: '6', label: 'Daly City - Fremont'}),
+          r.option({value: '4', label: 'Richmond - Fremont'})
         ])
       ]),
       r.div({className: 'map-container'}, [

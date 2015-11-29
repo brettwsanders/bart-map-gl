@@ -3,26 +3,31 @@
    {
      "name": "Millbrae - Richmond",
      "abbr": "M-R",
+     "routeNumber": "8",
      "stations": ["MLBR", "SBRN", "SSAN", "COLM", "DALY", "BALB", "GLEN", "24TH", "16TH", "CIVC", "POWL", "MONT", "EMBR", "WOAK", "12TH", "19TH", "MCAR", "ASHB", "DBRK", "NBRK", "PLZA", "DELN", "RICH"]
    },
    {
     "name": "Millbrae - Pittsburg/Bay Point",
     "abbr": "M-PBP",
+    "routeNumber": "2",
     "stations": ["MLBR", "SFIA", "SBRN", "SSAN", "COLM", "DALY", "BALB", "GLEN", "24TH", "16TH", "CIVC", "POWL", "MONT", "EMBR", "WOAK", "12TH", "19TH", "MCAR", "ROCK", "ORIN", "LAFY", "WCRK", "PHIL", "CONC", "NCON", "PITT"]
    },
    {
     "name": "Daly City - Dublin/Pleasanton",
     "abbr": "DC-DP",
+    "routeNumber": "12",
     "stations": ["DALY", "BALB", "GLEN", "24TH", "16TH", "CIVC", "POWL", "MONT", "EMBR", "WOAK", "LAKE", "FTVL", "COLS", "SANL", "BAYF", "CAST", "WDUB", "DUBL"]
    },
    {
     "name": "Daly City - Fremont",
     "abbr": "DC-F",
+    "routeNumber": "6",
     "stations": ["DALY", "BALB", "GLEN", "24TH", "16TH", "CIVC", "POWL", "MONT", "EMBR", "WOAK", "LAKE", "FTVL", "COLS", "SANL", "BAYF", "HAYW", "SHAY", "UCTY", "FRMT"]
    },
    {
     "name": "Richmond - Fremont",
     "abbr": "R-F",
+    "routeNumber": "4",
     "stations": ["RICH", "DELN", "PLZA", "NBRK", "DBRK", "ASHB", "MCAR", "19TH", "12TH", "LAKE", "FTVL", "COLS", "SANL", "BAYF", "HAYW", "SHAY", "UCTY", "FRMT"]
    }
   ],

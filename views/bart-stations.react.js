@@ -38,6 +38,25 @@ var stations = bartData.stations.map(function _getCoords(station) {
   return [station.latitude, station.longitude];
 });
 
+var getTodaysDate = function() {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+
+  if(dd<10) {
+      dd='0'+dd;
+  } 
+
+  if(mm<10) {
+      mm='0'+mm;
+  } 
+
+  return mm+'/'+dd+'/'+yyyy;
+};
+
+var today = getTodaysDate();
+
 var RouteOverlayExample = React.createClass({
   displayName: 'RouteOverlayExample',
 
@@ -99,12 +118,22 @@ var RouteOverlayExample = React.createClass({
     });
   },
 
+  _clickHandler: function _clickHandler(e) {
+    window.open('https://www.bart.gov/schedules/bylineresults?route=' + this.props.routeNumber + '&date=' + today, '_blank');
+  },
+
   _redrawSVGOverlay: function _redrawSVGOverlay(opt) {
     var index = 0;
-      var points = this.props.routeSelected.map(opt.project).map(function __map(p) {
-        return [d3.round(p.x, 1), d3.round(p.y, 1)];
-      });
-      return r.g({key: index, onMouseOver: this._mouseOver, onMouseOut: this._mouseOut}, this._renderRoute(points));
+    var points = this.props.routeSelected.map(opt.project).map(function __map(p) {
+      return [d3.round(p.x, 1), d3.round(p.y, 1)];
+    });
+    return r.g({
+      key: index, 
+      onMouseOver: this._mouseOver, 
+      onMouseOut: this._mouseOut,
+      onClick: this._clickHandler
+    }, 
+      this._renderRoute(points));
   },
 
   _redrawCanvasOverlay: function _redrawCanvasOverlay(opt) {
